@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Soma Pesa - Categorize Transaction</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00e677",
+                        "background-light": "#f5f8f7",
+                        "background-dark": "#0f2319",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(15, 35, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(0, 230, 119, 0.2);
+        }
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+        .category-card:active {
+            background: rgba(0, 230, 119, 0.1);
+            border-color: #00e677;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<!-- Background Dashboard (Blurred) -->
+<div class="relative flex h-screen w-full flex-col filter blur-sm">
+<!-- Header -->
+<div class="flex items-center p-4 justify-between">
+<div class="flex size-12 items-center">
+<span class="material-symbols-outlined text-slate-100">menu</span>
+</div>
+<h2 class="text-lg font-bold flex-1 text-center">Soma Pesa</h2>
+<div class="flex w-12 items-center justify-end">
+<span class="material-symbols-outlined text-slate-100">notifications</span>
+</div>
+</div>
+<!-- Stats -->
+<div class="flex flex-wrap gap-4 p-4">
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 bg-primary/10 border border-primary/20">
+<p class="text-slate-400 text-sm">Total Balance</p>
+<p class="text-2xl font-bold">Ksh 45,200</p>
+</div>
+<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 bg-primary/10 border border-primary/20">
+<p class="text-slate-400 text-sm">Monthly Spend</p>
+<p class="text-2xl font-bold">Ksh 12,800</p>
+</div>
+</div>
+<!-- Weekly Activity Placeholder -->
+<div class="px-4 py-2">
+<div class="h-48 w-full bg-slate-800/40 rounded-xl flex items-end justify-between p-4">
+<div class="w-8 bg-primary/30 h-1/2 rounded-t-sm"></div>
+<div class="w-8 bg-primary/30 h-1/4 rounded-t-sm"></div>
+<div class="w-8 bg-primary/30 h-3/4 rounded-t-sm"></div>
+<div class="w-8 bg-primary/60 h-2/3 rounded-t-sm"></div>
+<div class="w-8 bg-primary/30 h-1/3 rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<!-- Overlay & Bottom Sheet -->
+<div class="fixed inset-0 bg-black/60 flex flex-col justify-end">
+<!-- Bottom Sheet Content -->
+<div class="glass-panel w-full rounded-t-xl px-6 pb-10 pt-3 flex flex-col items-center">
+<!-- Drag Handle -->
+<div class="h-1.5 w-12 rounded-full bg-slate-700 mb-8"></div>
+<!-- Transaction Info -->
+<div class="text-center mb-8">
+<p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-widest">New Transaction Detected</p>
+<h1 class="text-4xl font-bold text-slate-100 mb-4">Ksh 2,500</h1>
+<!-- Smart Guess Chip -->
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/40 text-primary">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+<span class="text-sm font-semibold">Smart Guess: Groceries?</span>
+</div>
+</div>
+<!-- Category Selection Grid -->
+<div class="w-full grid grid-cols-4 gap-4 mb-10">
+<!-- Category 1 -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="category-card size-16 rounded-xl flex items-center justify-center text-slate-100 group-active:text-primary">
+<span class="material-symbols-outlined text-3xl">restaurant</span>
+</div>
+<span class="text-xs text-slate-400 font-medium">Food</span>
+</button>
+<!-- Category 2 -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="category-card size-16 rounded-xl flex items-center justify-center text-slate-100 group-active:text-primary">
+<span class="material-symbols-outlined text-3xl">local_gas_station</span>
+</div>
+<span class="text-xs text-slate-400 font-medium">Fuel</span>
+</button>
+<!-- Category 3 -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="category-card size-16 rounded-xl flex items-center justify-center border-primary/50 bg-primary/5 text-primary">
+<span class="material-symbols-outlined text-3xl">storefront</span>
+</div>
+<span class="text-xs text-primary font-bold">TeraSoko</span>
+</button>
+<!-- Category 4 -->
+<button class="flex flex-col items-center gap-2 group">
+<div class="category-card size-16 rounded-xl flex items-center justify-center text-slate-100 group-active:text-primary">
+<span class="material-symbols-outlined text-3xl">home</span>
+</div>
+<span class="text-xs text-slate-400 font-medium">Rent</span>
+</button>
+</div>
+<!-- Split Toggle & Actions -->
+<div class="w-full flex flex-col gap-6">
+<!-- Split Toggle -->
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400">call_split</span>
+</div>
+<div>
+<p class="font-semibold text-slate-200">Split Transaction</p>
+<p class="text-xs text-slate-500">Divide into multiple categories</p>
+</div>
+</div>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Action Button -->
+<button class="w-full py-4 bg-primary text-background-dark font-bold text-lg rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+                    Confirm Categorization
+                </button>
+<button class="w-full py-2 text-slate-500 font-medium text-sm">
+                    Dismiss
+                </button>
+</div>
+</div>
+<!-- Bottom Navigation Bar (Partially visible/locked) -->
+<div class="flex gap-2 border-t border-slate-800 bg-background-dark px-4 pb-6 pt-2 w-full opacity-60 pointer-events-none">
+<div class="flex flex-1 flex-col items-center gap-1">
+<span class="material-symbols-outlined text-primary">home</span>
+<p class="text-primary text-[10px]">Home</p>
+</div>
+<div class="flex flex-1 flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">receipt_long</span>
+<p class="text-[10px]">History</p>
+</div>
+<div class="flex flex-1 flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">pie_chart</span>
+<p class="text-[10px]">Budget</p>
+</div>
+<div class="flex flex-1 flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px]">Profile</p>
+</div>
+</div>
+</div>
+</body></html>
