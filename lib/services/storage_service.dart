@@ -12,12 +12,13 @@ class StorageService {
   static Future<void> init() async {
     await Hive.initFlutter();
     
-    // Normally you would register adapters here if they were generated
-    // e.g., Hive.registerAdapter(TransactionModelAdapter());
-    // Since we can't run codegen right now, we assume this would be handled.
+    // Register the custom manual adapters we built to avoid build_runner in the cloud
+    Hive.registerAdapter(TransactionModelAdapter());
+    Hive.registerAdapter(EnvelopeModelAdapter());
+    Hive.registerAdapter(SubscriptionModelAdapter());
     
     await Future.wait([
-      Hive.openBox<dynamic>(transactionsBoxName), // Using dynamic for now due to missing generated adapters
+      Hive.openBox<dynamic>(transactionsBoxName),
       Hive.openBox<dynamic>(envelopesBoxName),
       Hive.openBox<dynamic>(subscriptionsBoxName),
       Hive.openBox<dynamic>(prefsBoxName),
