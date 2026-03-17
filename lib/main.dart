@@ -59,7 +59,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           context: context,
           backgroundColor: Colors.transparent,
           isScrollControlled: true,
-          builder: (context) => const SmsTriggerSheet(),
+          builder: (context) => SmsTriggerSheet(transaction: transaction),
         );
       }
     });
