@@ -1,28 +1,12 @@
 import 'package:hive/hive.dart';
 
-part 'envelope_model.g.dart';
-
-@HiveType(typeId: 1)
 class EnvelopeModel extends HiveObject {
-  @HiveField(0)
   final String id;
-
-  @HiveField(1)
   final String name;
-
-  @HiveField(2)
   final String icon;
-
-  @HiveField(3)
   final String colorHex;
-
-  @HiveField(4)
   double allocatedAmount;
-
-  @HiveField(5)
   double spentAmount;
-
-  @HiveField(6)
   final DateTime createdDate;
 
   EnvelopeModel({
@@ -37,4 +21,46 @@ class EnvelopeModel extends HiveObject {
   
   double get remaining => allocatedAmount - spentAmount;
   double get progress => allocatedAmount > 0 ? (spentAmount / allocatedAmount).clamp(0.0, 1.0) : 0.0;
+}
+
+class EnvelopeModelAdapter extends TypeAdapter<EnvelopeModel> {
+  @override
+  final int typeId = 1;
+
+  @override
+  EnvelopeModel read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return EnvelopeModel(
+      id: fields[0] as String,
+      name: fields[1] as String,
+      icon: fields[2] as String,
+      colorHex: fields[3] as String,
+      allocatedAmount: fields[4] as double,
+      spentAmount: fields[5] as double? ?? 0.0,
+      createdDate: fields[6] as DateTime,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, EnvelopeModel obj) {
+    writer
+      ..writeByte(7)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.icon)
+      ..writeByte(3)
+      ..write(obj.colorHex)
+      ..writeByte(4)
+      ..write(obj.allocatedAmount)
+      ..writeByte(5)
+      ..write(obj.spentAmount)
+      ..writeByte(6)
+      ..write(obj.createdDate);
+  }
 }

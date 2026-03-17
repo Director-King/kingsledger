@@ -1,40 +1,16 @@
 import 'package:hive/hive.dart';
 
-part 'transaction_model.g.dart'; // Will be generated using build_runner
-
-@HiveType(typeId: 0)
 class TransactionModel extends HiveObject {
-  @HiveField(0)
   final String id;
-
-  @HiveField(1)
   final double amount;
-
-  @HiveField(2)
   final DateTime date;
-
-  @HiveField(3)
   final String provider; // 'MPESA', 'EQUITY', 'KCB', 'CO-OP', 'NCBA'
-
-  @HiveField(4)
   final String type; // 'Paybill', 'Buy Goods', 'Send Money', 'Withdrawal', 'Deposit'
-
-  @HiveField(5)
   final String party; // e.g. "SAFARICOM", "JOHN DOE"
-
-  @HiveField(6)
   String category;
-
-  @HiveField(7)
   bool isBusiness;
-
-  @HiveField(8)
   String envelopeId;
-
-  @HiveField(9)
   final double balance; // "New Balance" after transaction
-  
-  @HiveField(10)
   final String rawMessage; // The original SMS message
 
   TransactionModel({
@@ -50,4 +26,58 @@ class TransactionModel extends HiveObject {
     required this.balance,
     required this.rawMessage,
   });
+}
+
+class TransactionModelAdapter extends TypeAdapter<TransactionModel> {
+  @override
+  final int typeId = 0;
+
+  @override
+  TransactionModel read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return TransactionModel(
+      id: fields[0] as String,
+      amount: fields[1] as double,
+      date: fields[2] as DateTime,
+      provider: fields[3] as String,
+      type: fields[4] as String,
+      party: fields[5] as String,
+      category: fields[6] as String? ?? 'Uncategorized',
+      isBusiness: fields[7] as bool? ?? false,
+      envelopeId: fields[8] as String? ?? '',
+      balance: fields[9] as double,
+      rawMessage: fields[10] as String,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, TransactionModel obj) {
+    writer
+      ..writeByte(11)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.amount)
+      ..writeByte(2)
+      ..write(obj.date)
+      ..writeByte(3)
+      ..write(obj.provider)
+      ..writeByte(4)
+      ..write(obj.type)
+      ..writeByte(5)
+      ..write(obj.party)
+      ..writeByte(6)
+      ..write(obj.category)
+      ..writeByte(7)
+      ..write(obj.isBusiness)
+      ..writeByte(8)
+      ..write(obj.envelopeId)
+      ..writeByte(9)
+      ..write(obj.balance)
+      ..writeByte(10)
+      ..write(obj.rawMessage);
+  }
 }
